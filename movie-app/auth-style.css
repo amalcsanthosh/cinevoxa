@@ -1,0 +1,521 @@
+/* Authentication Pages Styling - Mobile Optimized */
+:root {
+    --primary-color: #00eeff;
+    --secondary-color: #ff00e5;
+    --background-color: #040118;
+    --card-bg-color: rgba(16, 15, 36, 0.95); /* Increased opacity for better performance */
+    --text-color: #e0e0ff;
+    --border-color: rgba(0, 238, 255, 0.5);
+    --input-bg-color: rgba(24, 24, 44, 0.9); /* Increased opacity */
+    --button-hover: #ff00e5;
+    --error-color: #ff3860;
+    --success-color: #28c76f;
+    --warn-color: #ffdd57;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.auth-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0;
+    border-radius: 12px;
+    /* Reduce blur for better performance on mobile */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* For Safari */
+    box-shadow: 0 0 20px rgba(0, 238, 255, 0.3);
+    border: 1px solid var(--border-color);
+    background: var(--card-bg-color);
+    position: relative;
+    overflow: hidden;
+    /* Simplified animation for better performance */
+    animation: glow 8s infinite alternate;
+    will-change: box-shadow; /* Optimize animation performance */
+}
+
+/* Simplify or remove before pseudo-element on mobile */
+@media (max-width: 600px) {
+    .auth-container::before {
+        display: none; /* Remove the animated border on mobile */
+    }
+}
+
+@media (min-width: 601px) {
+    .auth-container::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+        z-index: -1;
+        opacity: 0.3;
+        filter: blur(20px);
+        animation: borderGlow 4s infinite alternate;
+        will-change: opacity; /* Optimize animation performance */
+    }
+}
+
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    position: relative; /* Ensure proper stacking context */
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s ease; /* Simplified transition */
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Adjust tab font size on smaller screens */
+@media (max-width: 600px) {
+    .auth-tab {
+        font-size: 1rem;
+        padding: 0.8rem 0.5rem;
+    }
+}
+
+.auth-tab:hover {
+    color: var(--primary-color);
+}
+
+.auth-tab.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.auth-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    /* Simplified animation */
+    animation: none;
+}
+
+.auth-form-container {
+    padding: 2rem;
+    position: relative;
+}
+
+/* Adjust padding on smaller screens */
+@media (max-width: 600px) {
+    .auth-form-container {
+        padding: 1.2rem;
+    }
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: formFadeIn 0.3s ease forwards; /* Shorter animation */
+    will-change: opacity, transform; /* Optimize animation performance */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* Adjust spacing on smaller screens */
+@media (max-width: 600px) {
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-family: 'Abel', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.1);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+}
+
+.password-toggle {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.password-toggle input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.password-toggle label {
+    display: inline;
+    font-size: 0.8rem;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    margin: 0; /* Reset margin */
+}
+
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-meter {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+
+.strength-meter-fill {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-meter-fill[data-strength="0"] {
+    width: 0%;
+    background-color: transparent;
+}
+
+.strength-meter-fill[data-strength="1"] {
+    width: 25%;
+    background-color: #ff3860;
+}
+
+.strength-meter-fill[data-strength="2"] {
+    width: 50%;
+    background-color: #ffdd57;
+}
+
+.strength-meter-fill[data-strength="3"] {
+    width: 75%;
+    background-color: #48c9b0;
+}
+
+.strength-meter-fill[data-strength="4"] {
+    width: 100%;
+    background-color: #28c76f;
+}
+
+.strength-text {
+    font-size: 0.7rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Adjust layout on smaller screens */
+@media (max-width: 400px) {
+    .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+.remember-forgot a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.remember-forgot a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.remember-forgot div {
+    display: flex;
+    align-items: center;
+}
+
+.remember-forgot input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.terms {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+}
+
+.terms input[type="checkbox"] {
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+.terms label {
+    display: inline;
+    font-size: 0.8rem;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.terms a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.terms a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 6px;
+    color: #000;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optimize button effects on mobile */
+@media (hover: hover) {
+    .auth-button:hover {
+        box-shadow: 0 0 15px rgba(0, 238, 255, 0.4);
+        transform: translateY(-2px);
+    }
+    
+    .auth-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.7s ease;
+    }
+    
+    .auth-button:hover::before {
+        left: 100%;
+    }
+}
+
+/* For mobile - use active state instead of hover */
+@media (max-width: 600px) {
+    .auth-button:active {
+        transform: translateY(-1px);
+        box-shadow: 0 0 12px rgba(0, 238, 255, 0.3);
+    }
+    
+    .auth-button::before {
+        display: none; /* Remove shine effect on mobile */
+    }
+}
+
+.social-login {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.social-login p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.social-login p::before,
+.social-login p::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.social-login p::before {
+    left: 0;
+}
+
+.social-login p::after {
+    right: 0;
+}
+
+/* Fixed social buttons layout for mobile */
+.social-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    width: 100%;
+}
+
+/* Stack buttons on very small screens */
+@media (max-width: 400px) {
+    .social-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.social-button {
+    padding: 0.7rem 0.5rem;
+    border-radius: 6px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    background: var(--input-bg-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Optimize button effects on mobile */
+@media (hover: hover) {
+    .social-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+    }
+}
+
+/* For mobile - use active state instead of hover */
+@media (max-width: 600px) {
+    .social-button:active {
+        transform: translateY(-1px);
+        box-shadow: 0 0 8px rgba(0, 238, 255, 0.2);
+    }
+}
+
+.social-button.google {
+    border-color: rgba(219, 68, 55, 0.5);
+}
+
+.social-button.facebook {
+    border-color: rgba(59, 89, 152, 0.5);
+}
+
+.error-message,
+.success-message {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.error-message {
+    background-color: rgba(255, 56, 96, 0.2);
+    border: 1px solid rgba(255, 56, 96, 0.5);
+    color: #ff3860;
+}
+
+.success-message {
+    background-color: rgba(40, 199, 111, 0.2);
+    border: 1px solid rgba(40, 199, 111, 0.5);
+    color: #28c76f;
+}
+
+/* Simplified Animations */
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px); /* Reduced movement */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 238, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(0, 238, 255, 0.3);
+    }
+}
+
+@keyframes borderGlow {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Add this to prevent any layout shifts */
+* {
+    box-sizing: border-box;
+}
+
+/* Font optimization */
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+}
